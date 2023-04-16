@@ -77,6 +77,14 @@ resource "vsphere_virtual_machine" "vm" {
     }
   }
 }
+resource "local_file" "vm_ip" {
+  content  = <<-DOC
+  [all]
+  ${vsphere_virtual_machine.vm.default_ip_address} ansible-user=ubuntu
+  DOC
+  filename = "vm_ip.txt"
+}
+
 output "my_ip_address" {
   value = vsphere_virtual_machine.vm.default_ip_address
 }
