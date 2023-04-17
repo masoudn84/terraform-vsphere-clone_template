@@ -48,7 +48,7 @@ pipeline {
                             //url: "$CONFIG_GIT_URL",
                             //credentialsId: "$CONFIG_GIT_CREDENTIALS"
                         )
-                        sh "cp vm_ip.txt ansible"
+                        sh "cp ../vm_ip.txt ansible"
                     }  
                 }
             }
