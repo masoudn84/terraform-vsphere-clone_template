@@ -16,7 +16,7 @@ pipeline {
                     anyof {
                         equals(
                             actual: currentBuild.number,
-                            excepted: 1
+                            expected: 1
                         )
                         expression {
                             return params.FORCE_INFRA
