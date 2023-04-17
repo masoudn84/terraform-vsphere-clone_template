@@ -10,9 +10,8 @@ pipeline {
             }
         }
         stage("terraform init") {
-            steps {
-                echo "+++++++++++++++++++++terraform init+++++++++++++++++++++++++"
-                when {
+            
+            when {
                     anyof {
                         equals(
                             actual: currentBuild.number,
@@ -26,7 +25,6 @@ pipeline {
                 steps {
                 sh """terraform init"""
                 }
-            }
         }
         stage("terraform build") {
             steps {
