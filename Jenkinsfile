@@ -48,7 +48,6 @@ pipeline {
                             //url: "$CONFIG_GIT_URL",
                             //credentialsId: "$CONFIG_GIT_CREDENTIALS"
                         )
-                        sh "cp ../vm_ip.txt ansible"
                     }  
                 }
             }
@@ -56,6 +55,7 @@ pipeline {
         stage("deploy service with ansible") {
             steps {
                 dir("ansible") {
+                    sh "cp ../vm_ip.txt ansible"
                     echo "++++++++++++++++++start deploy+++++++++++++++++++++++++++++++"
                     ansiblePlaybook(
                         inventory: "vm_ip.txt",
