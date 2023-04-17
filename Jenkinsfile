@@ -43,7 +43,7 @@ pipeline {
                 script{
                     dir("ansible") {
                         git(
-                            //branch: "main",
+                            branch: "main",
                             url: "https://github.com/masoudn84/iac_jenkins.git",
                             //url: "$CONFIG_GIT_URL",
                             //credentialsId: "$CONFIG_GIT_CREDENTIALS"
