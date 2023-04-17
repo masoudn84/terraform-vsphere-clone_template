@@ -55,14 +55,14 @@ pipeline {
         }
         stage("deploy service with ansible") {
             steps {
-                echo "++++++++++++++++++start deploy+++++++++++++++++++++++++++++++"
-                sh "ls"
-                sh "pwd"
-                ansiblePlaybook(
-                    inventory: "vm_ip.txt",
-                    become: true,
-                    playbook: "play.yml"
-                )
+                dir("ansible") {
+                    echo "++++++++++++++++++start deploy+++++++++++++++++++++++++++++++"
+                    ansiblePlaybook(
+                        inventory: "vm_ip.txt",
+                        become: true,
+                        playbook: "play.yml"
+                    )
+                }
             }
         }
     }
