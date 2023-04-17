@@ -55,8 +55,8 @@ pipeline {
         stage("deploy service with ansible") {
             steps {
                 dir("ansible") {
-                    sh "cp ../vm_ip.txt ansible"
-                    sh "cd ansible"
+                    sh "cp ../vm_ip.txt ."
+                    sh "ls"
                     echo "++++++++++++++++++start deploy+++++++++++++++++++++++++++++++"
                     ansiblePlaybook(
                         inventory: "vm_ip.txt",
