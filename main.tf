@@ -80,7 +80,7 @@ resource "vsphere_virtual_machine" "vm" {
 resource "local_file" "vm_ip" {
   content  = <<-DOC
   [all]
-  ${vsphere_virtual_machine.vm.default_ip_address} ansible_user=ubuntu host_key_checking=False ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+  ${vsphere_virtual_machine.vm.default_ip_address} ansible_user=ubuntu ansible_ssh_pass= ubuntu host_key_checking=False ansible_ssh_common_args='-o StrictHostKeyChecking=no'
   DOC
   filename = "vm_ip.txt"
 }
