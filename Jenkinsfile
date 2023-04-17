@@ -12,7 +12,7 @@ pipeline {
         stage("terraform init") {
             
             when {
-                    anyof {
+                    anyOf {
                         equals(
                             actual: currentBuild.number,
                             expected: 1
