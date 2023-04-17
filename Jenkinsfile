@@ -10,20 +10,22 @@ pipeline {
             }
         }
         stage("terraform init") {
-            echo "+++++++++++++++++++++terraform init+++++++++++++++++++++++++"
-            when {
-                anyof {
-                    equals(
-                        actual: currentBuild.number,
-                        excepted: 1
-                    )
-                    expression {
-                        return params.FORCE_INFRA
+            steps {
+                echo "+++++++++++++++++++++terraform init+++++++++++++++++++++++++"
+                when {
+                    anyof {
+                        equals(
+                            actual: currentBuild.number,
+                            excepted: 1
+                        )
+                        expression {
+                            return params.FORCE_INFRA
+                        }
                     }
                 }
-            }
-            steps {
-            sh """terraform init"""
+                steps {
+                sh """terraform init"""
+                }
             }
         }
         stage("terraform build")
