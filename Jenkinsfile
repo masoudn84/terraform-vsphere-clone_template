@@ -38,13 +38,27 @@ pipeline {
                 }    
             }
         }
+        stage("load ansible file") {
+            steps {
+                script{
+                    dir("ansible") {
+                        git(
+                            //branch: "main",
+                            url: "https://github.com/masoudn84/iac_jenkins.git",
+                            //url: "$CONFIG_GIT_URL",
+                            //credentialsId: "$CONFIG_GIT_CREDENTIALS"
+                        )
+                        sh "cp vm_ip.txt ansible"
+                    }  
+                }
+        }
         stage("deploy service with ansible") {
             steps {
                 echo "++++++++++++++++++start deploy+++++++++++++++++++++++++++++++"
                 ansiblePlaybook(
                     inventory: "vm_ip.txt",
                     become: true,
-                    playbook: "deploy.yml"
+                    playbook: "play.yml"
                 )
             }
         }
