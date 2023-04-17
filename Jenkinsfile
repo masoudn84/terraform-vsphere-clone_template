@@ -9,38 +9,37 @@ pipeline {
                 sh "mv config/terraform.tfvars ."
             }
         }
-    }
-    stage("terraform init") {
-        echo "+++++++++++++++++++++terraform init+++++++++++++++++++++++++"
-        when {
-            anyof {
-                equals(
-                    actual: currentBuild.number,
-                    excepted: 1
-                )
-                expression {
-                    return params.FORCE_INFRA
+        stage("terraform init") {
+            echo "+++++++++++++++++++++terraform init+++++++++++++++++++++++++"
+            when {
+                anyof {
+                    equals(
+                        actual: currentBuild.number,
+                        excepted: 1
+                    )
+                    expression {
+                        return params.FORCE_INFRA
+                    }
                 }
             }
+            steps {
+            sh """terraform init"""
+            }
         }
-        steps {
-        sh """terraform init"""
+        stage("terraform build")
+            echo "++++++++++++++++++start build+++++++++++++++++++++++++++++++"
+        withCredentials([usernamePassword(credentialsId: "",passwordVariable: "",usernameVariable: "")]) {
+            timeout(60) {sh """
+            terraform apply -auto-approve
+            """
+            }
         }
+        stage("deploy service with ansible")
+            echo "++++++++++++++++++start deploy+++++++++++++++++++++++++++++++"
+            ansiblePlaybook(
+                inventory: "vm_ip.txt",
+                become: true,
+                playbook: "deploy.yml"
+            )
     }
-    stage("terraform build")
-        echo "++++++++++++++++++start build+++++++++++++++++++++++++++++++"
-    withCredentials([usernamePassword(credentialsId: "",passwordVariable: "",usernameVariable: "")]) {
-        timeout(60) {sh """
-        terraform apply -auto-approve
-        """
-        }
-    }
-    stage("deploy service with ansible")
-        echo "++++++++++++++++++start deploy+++++++++++++++++++++++++++++++"
-        ansiblePlaybook(
-            inventory: "vm_ip.txt",
-            become: true,
-            playbook: "deploy.yml"
-        )
-
 }
