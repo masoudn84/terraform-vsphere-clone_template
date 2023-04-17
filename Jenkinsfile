@@ -51,6 +51,7 @@ pipeline {
                         sh "cp vm_ip.txt ansible"
                     }  
                 }
+            }
         }
         stage("deploy service with ansible") {
             steps {
