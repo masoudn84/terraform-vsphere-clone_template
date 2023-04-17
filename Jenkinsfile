@@ -29,10 +29,10 @@ pipeline {
         stage("terraform build") {
             steps {
                 echo "++++++++++++++++++start build+++++++++++++++++++++++++++++++"
-                withCredentials([usernamePassword(credentialsId: "vcenter_pass",passwordVariable: "YOUR_PW_DEFINED",usernameVariable: "YOUR_USR_DEFINED")]) {
+                withCredentials([string(credentialsId: "vcenterPass",variable: "YOUR_PW_DEFINED")]) {
                     timeout(60) {
                         sh """
-                            terraform apply -auto-approve -var vsphere_password=YOUR_PW_DEFINED 
+                            terraform apply -auto-approve -var vsphere_password=${YOUR_PW_DEFINED} 
                         """
                     }
                 }    
