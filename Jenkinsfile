@@ -41,12 +41,14 @@ pipeline {
             }
         }
         stage("deploy service with ansible") {
-            echo "++++++++++++++++++start deploy+++++++++++++++++++++++++++++++"
-            ansiblePlaybook(
-                inventory: "vm_ip.txt",
-                become: true,
-                playbook: "deploy.yml"
-            )
+            steps {
+                echo "++++++++++++++++++start deploy+++++++++++++++++++++++++++++++"
+                ansiblePlaybook(
+                    inventory: "vm_ip.txt",
+                    become: true,
+                    playbook: "deploy.yml"
+                )
+            }
         }
     }
 }
