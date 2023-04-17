@@ -28,20 +28,25 @@ pipeline {
                 }
             }
         }
-        stage("terraform build")
-            echo "++++++++++++++++++start build+++++++++++++++++++++++++++++++"
-        withCredentials([usernamePassword(credentialsId: "",passwordVariable: "",usernameVariable: "")]) {
-            timeout(60) {sh """
-            terraform apply -auto-approve
-            """
+        stage("terraform build") {
+            steps {
+                echo "++++++++++++++++++start build+++++++++++++++++++++++++++++++"
+                withCredentials([usernamePassword(credentialsId: "",passwordVariable: "",usernameVariable: "")]) {
+                    timeout(60) {
+                        sh """
+                            terraform apply -auto-approve
+                        """
+                    }
+                }    
             }
         }
-        stage("deploy service with ansible")
+        stage("deploy service with ansible") {
             echo "++++++++++++++++++start deploy+++++++++++++++++++++++++++++++"
             ansiblePlaybook(
                 inventory: "vm_ip.txt",
                 become: true,
                 playbook: "deploy.yml"
             )
+        }
     }
 }
