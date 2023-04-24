@@ -79,3 +79,12 @@ variable "vm_ram" {
 variable "vm_name" {
   description = "The name of the vSphere virtual machines and the hostname of the machine"
 }
+variable "vm_guestID" {
+  default = "ubuntu64Guest"
+}
+variable "vm_disk_size" {
+  default = 20
+}
+variable "vm_hostname" {
+  default = "temp"
+}

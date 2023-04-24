@@ -50,18 +50,18 @@ data "vsphere_virtual_machine" "template" {
 #===============================================================================
 
 resource "vsphere_virtual_machine" "vm" {
-  name             = "foo"
+  name             = var.vm_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
-  num_cpus         = 4
-  memory           = 4048
-  guest_id         = "ubuntu64Guest"
+  num_cpus         = var.vm_cpu
+  memory           = var.vm_ram
+  guest_id         = var.vm_guestID
   network_interface {
     network_id = data.vsphere_network.network.id
   }
   disk {
-    label = "disk0"
-    size  = 20
+    label = "${var.vm_name}-disk0"
+    size  = var.vm_disk_size
   }
   clone {
     template_uuid = data.vsphere_virtual_machine.template.id
@@ -69,8 +69,8 @@ resource "vsphere_virtual_machine" "vm" {
       timeout = "20"
 
       linux_options {
-        host_name = "hello-world"
-        domain    = "example.com"
+        host_name = var.vm_hostname
+        domain    = var.vm_domain
       }
       network_interface {}
 

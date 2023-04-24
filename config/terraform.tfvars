@@ -22,7 +22,7 @@ vsphere_cluster = "Cluster"
 #===============================================================================
 
 # The name of the virtual machine #
-vm_name = "Centos7-jenkins"
+vm_name = "kubernetes-test"
 
 # The datastore name used to store the files of the virtual machine #
 vm_datastore = "Srv01-vDisk1-Raid10"
@@ -55,4 +55,7 @@ vm_cpu = "2"
 vm_ram = "2048"
 
 # The IP address of the virtual machine #
-vm_ip = "10.132.160.227"
+vm_ip        = "10.132.160.227"
+vm_guestID   = "ubuntu64Guest"
+vm_disk_size = 20
+vm_hostname  = "temp-kubernetes"
